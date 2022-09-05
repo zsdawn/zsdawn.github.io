@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MCU课程设计（DC-DC电源） | zs_dawn</title><meta name="author" content="zs_dawn"><meta name="copyright" content="zs_dawn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="基于stc15f2k60s2的DC-DC电源主控板设计简介MCU 系统综合实验的课程设计，采用单片机 （stc15f2k60s2） 和屏幕 （0.96寸oled）并利用旋转编码器（EC11）进行交互设计，主要功能为boost升压电源(可修改为buck)。 系统实现了目标电压可调的boost升压电路，多个菜单选项的选择、显示示例和一些基础实验。 Hardware硬件使用 立创EDA标准版 绘制，原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MCU课程设计（DC-DC电源）">
+<meta property="og:url" content="https://zsa1.gitee.io/2022/09/05/MCU%E8%AF%BE%E8%AE%BE/index.html">
+<meta property="og:site_name" content="zs_dawn">
+<meta property="og:description" content="基于stc15f2k60s2的DC-DC电源主控板设计简介MCU 系统综合实验的课程设计，采用单片机 （stc15f2k60s2） 和屏幕 （0.96寸oled）并利用旋转编码器（EC11）进行交互设计，主要功能为boost升压电源(可修改为buck)。 系统实现了目标电压可调的boost升压电路，多个菜单选项的选择、显示示例和一些基础实验。 Hardware硬件使用 立创EDA标准版 绘制，原理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-09-05T11:11:59.785Z">
+<meta property="article:modified_time" content="2022-09-05T14:32:25.177Z">
+<meta property="article:author" content="zs_dawn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zsa1.gitee.io/2022/09/05/MCU%E8%AF%BE%E8%AE%BE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-05 22:32:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">zs_dawn</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MCU课程设计（DC-DC电源）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-05T11:11:59.785Z" title="发表于 2022-09-05 19:11:59">2022-09-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-05T14:32:25.177Z" title="更新于 2022-09-05 22:32:25">2022-09-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="基于stc15f2k60s2的DC-DC电源主控板设计"><a href="#基于stc15f2k60s2的DC-DC电源主控板设计" class="headerlink" title="基于stc15f2k60s2的DC-DC电源主控板设计"></a>基于stc15f2k60s2的DC-DC电源主控板设计</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>MCU 系统综合实验的课程设计，采用单片机 （stc15f2k60s2） 和屏幕 （0.96寸oled）并利用旋转编码器（EC11）进行交互设计，主要功能为boost升压电源(可修改为buck)。</p>
+<p>系统实现了目标电压可调的boost升压电路，多个菜单选项的选择、显示示例和一些基础实验。</p>
+<h2 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h2><p>硬件使用 立创EDA标准版 绘制，原理图如下：<br><img src="img.png" alt="img.png"><br>使用type-C接口供电，未设计ch340，只做供电。需要额外的USB转TTL作为程序烧入以及串口输出（接口已引出），使用仅使用ec11作为交互设备，有左旋，右旋，按下三种动作。</p>
+<p>PCB 图形（铺铜隐藏）：<br><img src="img_4.png" alt="img_4.png"><br>PCB 3D图形 ：<br><img src="img_5.png" alt="img_5.png"></p>
+<h2 id="Firmware"><a href="#Firmware" class="headerlink" title="Firmware"></a>Firmware</h2><p>文件没有整理，，固件结构如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Firmware</span><br><span class="line"> │  PCA-PWM.uvproj</span><br><span class="line"> │  config.h             时钟配置</span><br><span class="line"> │  STC15Fxxxx.H</span><br><span class="line"> │  main-pca-pwm.c       主程序</span><br><span class="line"> │  timer.c              库文件-定时器</span><br><span class="line"> │  timer.h</span><br><span class="line"> │  Soft_UART.c          库文件-串口</span><br><span class="line"> │  Soft_UART.h</span><br><span class="line"> │  PCA.c                库文件-硬件pwm</span><br><span class="line"> │  PCA.h</span><br><span class="line"> │  GPIO.c               库文件-GPIO</span><br><span class="line"> │  GPIO.h</span><br><span class="line"> │  ADC.c                库文件-ADC</span><br><span class="line"> │  ADC.h</span><br><span class="line"> │  delay.c              库文件-延时              </span><br><span class="line"> │  delay.h</span><br><span class="line"> │  Exti.c               库文件-外部中断</span><br><span class="line"> │  Exti.h</span><br><span class="line"> │  iic.c                软IIC文件</span><br><span class="line"> │  iic.h</span><br><span class="line"> │  pid.c                pid文件</span><br><span class="line"> │  pid.h</span><br><span class="line"> │  oled.c               <span class="number">0.96</span>寸oled驱动库</span><br><span class="line"> │  oled.h</span><br><span class="line"> │  font.h</span><br><span class="line"> │  bmp.h</span><br><span class="line"> │  menu.c               菜单ui文件</span><br><span class="line"> │  menu.h</span><br><span class="line"> │  ec11.c               ec11驱动库</span><br><span class="line"> │  ec11.h</span><br><span class="line"> └─ </span><br></pre></td></tr></table></figure>
+<p>程序可参照注释阅读，具体使用方法请参考源文件内的注释以及实现。 </p>
+<p>编码方式为GB2312<br>单片机使用 内部晶振，主频为22.118400M(修改可能串口波特率会更改)<br>串口波特率为 9600bps<br>pwm频率为10k<br>控制频率为3k(测试不能太高，算不过来)</p>
+<p>共设计两级菜单<br>通过旋转编码器按键 进入和退出，在电源控制界面，左旋和右旋为目标电压增减。其余界面为示例功能切换，如动画切换，串口更改输出。<br>最初子菜单后，该功能取消，即电压控制定时器关闭</p>
+<h2 id="实物图"><a href="#实物图" class="headerlink" title="实物图"></a>实物图</h2><p>焊接完成效果<img src="ecf456dc54abe343a220bf3e79b517c.jpg"><br>主菜单<img src="IMG_20220602_155214.jpg"><br>调节目标电压<img src="IMG_20220602_155222.jpg"><br>动画效果<img src="IMG_20220602_155237.jpg"><br>其余功能只是作为平时实验累加上去，并无难度，遂不展示</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>难点主要在于调试boost稳压，因不可debug 调试起来难以观测内部变量，对于实时控制系统有点增加难度<br>其次是主频和adc性能都较为弱，不过因为其实要求不高，所以还能用，纹波测试下来也不大<br>缺点：不能做到线性稳压，会有所偏移，一是我 采样模块的拟合误差，一个是stc本身的 adc只有10位，且有误差。</p>
+<h2 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h2><p><a href="MCU_Boost.zip">点击下载 MCU_Boost.zip</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">zs_dawn</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://zsa1.gitee.io/2022/09/05/MCU%E8%AF%BE%E8%AE%BE/">https://zsa1.gitee.io/2022/09/05/MCU%E8%AF%BE%E8%AE%BE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://zsa1.gitee.io" target="_blank">zs_dawn</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/09/15/%E6%88%90%E7%BB%A9/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">教务下载个人成绩</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">zs_dawn</div><div class="author-info__description">欢迎来到dawn的博客</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Estc15f2k60s2%E7%9A%84DC-DC%E7%94%B5%E6%BA%90%E4%B8%BB%E6%8E%A7%E6%9D%BF%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">基于stc15f2k60s2的DC-DC电源主控板设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hardware"><span class="toc-number">1.2.</span> <span class="toc-text">Hardware</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Firmware"><span class="toc-number">1.3.</span> <span class="toc-text">Firmware</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%89%A9%E5%9B%BE"><span class="toc-number">1.4.</span> <span class="toc-text">实物图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">1.5.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E6%96%87%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">源文件</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/MCU%E8%AF%BE%E8%AE%BE/" title="MCU课程设计（DC-DC电源）"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCU课程设计（DC-DC电源）"/></a><div class="content"><a class="title" href="/2022/09/05/MCU%E8%AF%BE%E8%AE%BE/" title="MCU课程设计（DC-DC电源）">MCU课程设计（DC-DC电源）</a><time datetime="2022-09-05T11:11:59.785Z" title="发表于 2022-09-05 19:11:59">2022-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/15/%E6%88%90%E7%BB%A9/" title="教务下载个人成绩"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="教务下载个人成绩"/></a><div class="content"><a class="title" href="/2021/09/15/%E6%88%90%E7%BB%A9/" title="教务下载个人成绩">教务下载个人成绩</a><time datetime="2021-09-15T12:34:22.468Z" title="发表于 2021-09-15 20:34:22">2021-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/21/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2021/02/21/hello-world/" title="Hello World">Hello World</a><time datetime="2021-02-21T11:57:55.548Z" title="发表于 2021-02-21 19:57:55">2021-02-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By zs_dawn</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
