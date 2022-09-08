@@ -180,9 +180,9 @@
       
         <tags>
             
-            <tag> stm32 </tag>
-            
             <tag> c </tag>
+            
+            <tag> stm32 </tag>
             
         </tags>
       
