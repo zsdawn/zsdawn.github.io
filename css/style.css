@@ -91,7 +91,7 @@
 @font-face{
     font-family: 'FZFWZhuZiAYuanJWB';
     font-display: swap;
-    src: url('../fonts/FZFWZhuZiAYuanJWB.TTF') format("truetype");;
+    src: url('../fonts/FZFWZhuZiAYuanJWB.TTF');;
 }
 
 .diyFont{
