@@ -94,6 +94,6 @@
     src: url('../fonts/FZFWZhuZiAYuanJWB.TTF');;
 }
 
-.diyFont{
-    font-family:  'FZFWZhuZiAYuanJWB'
+body {
+    font-family: 'FZFWZhuZiAYuanJWB';
 }
