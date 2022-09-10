@@ -83,6 +83,10 @@ body {
 }
 
 
+
+#page-header{
+  background: transparent!important;
+}
 #page-header:not(.not-top-img):before {
   position: absolute;
   width: 100%;
