@@ -25,7 +25,7 @@
 
 #footer-wrap,
 #footer-wrap a {
-    color: #4c4948 !important;
+    color: white !important;
 }
 
 /* 滚动条样式 */
@@ -84,9 +84,10 @@ body {
 
 
 
-#page-header{
-  background: transparent!important;
-}
+    #page-header{
+      background: transparent!important;
+    }
+
 #page-header:not(.not-top-img):before {
   position: absolute;
   width: 100%;
