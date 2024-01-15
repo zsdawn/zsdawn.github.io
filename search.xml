@@ -110,6 +110,33 @@
     
     
     <entry>
+      <title>DSP28379学习笔记 （一）——GPIO基本操作</title>
+      <link href="/2022/08/08/%E4%BF%9D%E7%A0%94%E8%AE%B0%E5%BD%95%E8%B4%B4/"/>
+      <url>/2022/08/08/%E4%BF%9D%E7%A0%94%E8%AE%B0%E5%BD%95%E8%B4%B4/</url>
+      
+        <content type="html"><![CDATA[<h1 id="保研纪录贴"><a href="#保研纪录贴" class="headerlink" title="保研纪录贴"></a>保研纪录贴</h1><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dsp28379 </tag>
+            
+            <tag> ccs </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>stm32H7定时器触发多通道adc采样 DMA(hal)</title>
       <link href="/2022/05/13/dma-adc/"/>
       <url>/2022/05/13/dma-adc/</url>
